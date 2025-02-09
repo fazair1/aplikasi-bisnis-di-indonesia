@@ -44,10 +44,11 @@ public class Main {
             System.out.println("2. Read Product");
             System.out.println("3. Update Product");
             System.out.println("4. Delete Product");
+            System.out.println("5. Exit");
             System.out.println("==============================");
 
             do {
-                System.out.print("Pilih Menu[1-4]: ");
+                System.out.print("Pilih Menu[1-5]: ");
                 num = scan.nextLine();
                 num = num.trim();
 
@@ -174,25 +175,114 @@ public class Main {
         System.out.println("========Update Product========");
         Scanner scan = new Scanner(System.in);
         String num;
-        String namaProduk;
-        String hargaProduk;
+        boolean produkFound;
+        String temp;
         int nomor = 0;
 
         if (listProduk.isEmpty()) {
             System.out.println("Produk kosong");
             return;
         }
-        System.out.println("Jumlah produk: "+listProduk.size());
+        for (int i = 0; i < listProduk.size(); i++) {
+            System.out.println(i+1+".");
+            System.out.println("Nama: "+listProduk.get(i).get(0));
+            System.out.println("Harga: Rp."+listProduk.get(i).get(1));
+        }
         do {
-            System.out.print("Masukan nomor produk untuk di update [1-"+listProduk.size()+"]: ");
-            num = scan.nextLine();
-            num = num.trim();
+            System.out.print("Apakah searching produk berdasarkan nomor, nama, atau harga? [nomor/nama/harga]: ");
+            temp = scan.nextLine();
+            temp = temp.trim();
 
-            if (onlyDigits(num) && !(num.isEmpty())) {
-                nomor = Integer.parseInt(num);
-            }
+        }while (!(temp.equals("nomor") || temp.equals("nama") || temp.equals("harga")));
 
-        } while (!(onlyDigits(num)) || num.isEmpty() || (nomor<=0 || nomor>listProduk.size()) );
+        if (temp.equals("nomor")) {
+            do {
+                System.out.print("Masukan nomor produk untuk di update [1-"+listProduk.size()+"]: ");
+                num = scan.nextLine();
+                num = num.trim();
+
+                if (onlyDigits(num) && !(num.isEmpty())) {
+                    nomor = Integer.parseInt(num);
+                }
+
+            } while (!(onlyDigits(num)) || num.isEmpty() || (nomor<=0 || nomor>listProduk.size()) );
+            selectEditProduct(nomor, listProduk);
+        }
+        else if (temp.equals("nama")) {
+            ArrayList<Integer> jumlahProduk = new ArrayList<Integer>();
+
+            do {
+                System.out.print("Masukan nama produk untuk di update: ");
+                num = scan.nextLine();
+                num = num.trim();
+                produkFound = false;
+
+                for (int i = 0; i < listProduk.size(); i++) {
+                    if (listProduk.get(i).get(0).equals(num)) {
+                        produkFound = true;
+                        jumlahProduk.add(i);
+                        nomor = i+1;
+                    }
+                }
+                if (jumlahProduk.size()>1) {
+                    for (int i : jumlahProduk) {
+                        System.out.println(i+1+".");
+                        System.out.println("Nama: "+listProduk.get(i).get(0));
+                        System.out.println("Harga: Rp."+listProduk.get(i).get(1));
+                    }
+                    do {
+                        System.out.print("Masukan nomor produk untuk di update: ");
+                        num = scan.nextLine();
+                        num = num.trim();
+
+                        if (onlyDigits(num) && !(num.isEmpty())) {
+                            nomor = Integer.parseInt(num);
+                        }
+                    } while (!(onlyDigits(num)) || num.isEmpty() || !(jumlahProduk.contains(nomor-1)));
+                }
+            } while (!(produkFound));
+            selectEditProduct(nomor, listProduk);
+        }
+        else if (temp.equals("harga")) {
+            ArrayList<Integer> jumlahProduk = new ArrayList<Integer>();
+
+            do {
+                System.out.print("Masukan harga produk untuk di update: ");
+                num = scan.nextLine();
+                num = num.trim();
+                produkFound = false;
+
+                for (int i = 0; i < listProduk.size(); i++) {
+                    if (listProduk.get(i).get(1).equals(num)) {
+                        produkFound = true;
+                        jumlahProduk.add(i);
+                        nomor = i+1;
+                    }
+                }
+                if (jumlahProduk.size()>1) {
+                    for (int i : jumlahProduk) {
+                        System.out.println(i+1+".");
+                        System.out.println("Nama: "+listProduk.get(i).get(0));
+                        System.out.println("Harga: Rp."+listProduk.get(i).get(1));
+                    }
+                    do {
+                        System.out.print("Masukan nomor produk untuk di update: ");
+                        num = scan.nextLine();
+                        num = num.trim();
+
+                        if (onlyDigits(num) && !(num.isEmpty())) {
+                            nomor = Integer.parseInt(num);
+                        }
+                    } while (!(onlyDigits(num)) || num.isEmpty() || !(jumlahProduk.contains(nomor-1)));
+                }
+            } while (!(produkFound));
+            selectEditProduct(nomor, listProduk);
+        }
+    }
+    static void selectEditProduct (int nomor, ArrayList<ArrayList<String>> listProduk) {
+        Scanner scan = new Scanner(System.in);
+        String namaProduk;
+        String hargaProduk;
 
         System.out.println(nomor+".");
         System.out.println("Nama: "+listProduk.get(nomor-1).get(0));
@@ -222,6 +312,7 @@ public class Main {
         System.out.println("Berhasil mengupdate produk dengan data:");
         System.out.println("Nama: "+namaProduk);
         System.out.println("Harga: Rp."+hargaProduk);
+
     }
     static void deleteProduct (ArrayList<ArrayList<String>> listProduk) {
 //        System.out.println("==============================");
@@ -235,7 +326,11 @@ public class Main {
             System.out.println("Produk kosong");
             return;
         }
-        System.out.println("Jumlah produk: "+listProduk.size());
+        for (int i = 0; i < listProduk.size(); i++) {
+            System.out.println(i+1+".");
+            System.out.println("Nama: "+listProduk.get(i).get(0));
+            System.out.println("Harga: Rp."+listProduk.get(i).get(1));
+        }
         do {
             System.out.print("Masukan nomor produk untuk di delete [1-"+listProduk.size()+"]: ");
             num = scan.nextLine();
