@@ -1,7 +1,30 @@
 package com.juaracoding;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
+
+class SortbyName implements Comparator<ArrayList<String>>
+{
+    public int compare(ArrayList<String> a, ArrayList<String> b) {
+        int nameCompare = a.get(0).compareTo(b.get(0));
+        int p1 = Integer.parseInt(a.get(1));
+        int p2 = Integer.parseInt(b.get(1));
+        int priceCompare = p1-p2;
+        return (nameCompare==0) ? priceCompare : nameCompare;
+    }
+}
+class SortbyPrice implements Comparator<ArrayList<String>>
+{
+    public int compare(ArrayList<String> a, ArrayList<String> b) {
+        int nameCompare = a.get(0).compareTo(b.get(0));
+        int p1 = Integer.parseInt(a.get(1));
+        int p2 = Integer.parseInt(b.get(1));
+        int priceCompare = p1-p2;
+        return (priceCompare==0) ? nameCompare : priceCompare;
+    }
+}
 
 public class Main {
 
@@ -92,7 +115,7 @@ public class Main {
         System.out.println("Nama: "+namaProduk);
         System.out.println("Harga: Rp."+hargaProduk);
     }
-    public static boolean onlyDigits(String s) {
+    static boolean onlyDigits(String s) {
 
         // Traverse each character in the string
         for (int i = 0; i < s.length(); i++) {
@@ -109,6 +132,8 @@ public class Main {
     static void readProduct (ArrayList<ArrayList<String>> listProduk) {
 //        System.out.println("==============================");
         System.out.println("=========Read Product=========");
+        Scanner scan = new Scanner(System.in);
+        String temp;
 
         if (listProduk.isEmpty()) {
             System.out.println("Produk kosong");
@@ -119,7 +144,30 @@ public class Main {
             System.out.println("Nama: "+listProduk.get(i).get(0));
             System.out.println("Harga: Rp."+listProduk.get(i).get(1));
         }
-//        System.out.println(listProduk);
+        do {
+            System.out.print("Apakah anda ingin melakukan sorting? [y/n]: ");
+            temp = scan.nextLine();
+            temp = temp.trim();
+
+        }while (!(temp.equals("y") || temp.equals("n")));
+
+        if (temp.equals("n")) {
+            return;
+        }
+        else {
+            do {
+                System.out.print("Apakah sorting berdasarkan nama atau harga? [nama/harga]: ");
+                temp = scan.nextLine();
+                temp = temp.trim();
+
+            }while (!(temp.equals("nama") || temp.equals("harga")));
+            if (temp.equals("nama")) {
+                Collections.sort(listProduk, new SortbyName());
+            } else if (temp.equals("harga")) {
+                Collections.sort(listProduk, new SortbyPrice());
+            }
+            System.out.println("Sorting berhasil!");
+        }
     }
     static void updateProduct (ArrayList<ArrayList<String>> listProduk) {
 //        System.out.println("==============================");
