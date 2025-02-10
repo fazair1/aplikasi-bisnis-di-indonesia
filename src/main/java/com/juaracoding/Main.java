@@ -94,7 +94,7 @@ public class Main {
         String namaProduk;
         String hargaProduk;
         String kategoriProduk;
-//        String stokProduk;
+        String stokProduk;
 
         System.out.println("========Create Produk=========");
 //        System.out.println("==============================");
@@ -115,7 +115,7 @@ public class Main {
             if (onlyDigits(hargaProduk) && !(hargaProduk.isEmpty())) {
                 d = Double.parseDouble(hargaProduk);
             }
-        } while (hargaProduk.isEmpty() || !(onlyDigits(hargaProduk)) || d < 0);
+        } while (hargaProduk.isEmpty() || !(onlyDigits(hargaProduk)) || d <= 0);
 
         do {
             System.out.print("Masukan kategori Produk [Not Nullable]: ");
@@ -124,17 +124,29 @@ public class Main {
 
         } while (kategoriProduk.isEmpty());
 
+        int s = 0;
+        do {
+            System.out.print("Masukan stok Produk [Not Nullable|Is Digit|stok >= 0]: ");
+            stokProduk = scan.nextLine();
+            stokProduk = stokProduk.trim();
+
+            if (onlyDigits(stokProduk) && !(stokProduk.isEmpty())) {
+                s = Integer.parseInt(stokProduk);
+            }
+        } while (stokProduk.isEmpty() || !(onlyDigits(stokProduk)) || s < 0);
+
         int len = listProduk.size();
         listProduk.add(new ArrayList<String>());
         listProduk.get(len).add(0, namaProduk);
         listProduk.get(len).add(1, hargaProduk);
         listProduk.get(len).add(2, kategoriProduk);
+        listProduk.get(len).add(3, stokProduk);
 
         System.out.println("Berhasil memasukan produk dengan data:");
         System.out.println("Nama: "+namaProduk);
         System.out.println("Harga: Rp."+hargaProduk);
         System.out.println("Kategori: "+kategoriProduk);
-
+        System.out.println("Stok: "+stokProduk);
     }
     static boolean onlyDigits(String s) {
 
@@ -205,7 +217,7 @@ public class Main {
             System.out.print("Apakah searching produk berdasarkan nomor, nama, harga, atau kategori? [nomor/nama/harga/kategori]: ");
             temp = scan.nextLine();
             temp = temp.trim();
-        }while (!(temp.equals("nomor") || temp.equals("nama") || temp.equals("harga") || temp.equals("kategori")));
+        }while (temp.isEmpty() || !(temp.equals("nomor") || temp.equals("nama") || temp.equals("harga") || temp.equals("kategori")));
 
         if (temp.equals("nomor")) {
             do {
@@ -334,11 +346,13 @@ public class Main {
         String namaProduk;
         String hargaProduk;
         String kategoriProduk;
+        String stokProduk;
 
         System.out.println(nomor+".");
         System.out.println("Nama: "+listProduk.get(nomor-1).get(0));
         System.out.println("Harga: Rp."+listProduk.get(nomor-1).get(1));
         System.out.println("Kategori: "+listProduk.get(nomor-1).get(2));
+        System.out.println("Stok: "+listProduk.get(nomor-1).get(3));
 
         do {
             System.out.print("Masukan nama produk baru [Not Nullable]: ");
@@ -356,7 +370,7 @@ public class Main {
             if (onlyDigits(hargaProduk) && !(hargaProduk.isEmpty())) {
                 d = Double.parseDouble(hargaProduk);
             }
-        } while (hargaProduk.isEmpty() || !(onlyDigits(hargaProduk)) || d < 0);
+        } while (hargaProduk.isEmpty() || !(onlyDigits(hargaProduk)) || d <= 0);
 
         do {
             System.out.print("Masukan kategori produk baru [Not Nullable]: ");
@@ -365,14 +379,27 @@ public class Main {
 
         } while (kategoriProduk.isEmpty());
 
+        int s = 0;
+        do {
+            System.out.print("Masukan stok produk baru [Not Nullable|Is Digit|Harga >= 0]: ");
+            stokProduk = scan.nextLine();
+            stokProduk = stokProduk.trim();
+
+            if (onlyDigits(stokProduk) && !(stokProduk.isEmpty())) {
+                s = Integer.parseInt(stokProduk);
+            }
+        } while (stokProduk.isEmpty() || !(onlyDigits(stokProduk)) || s < 0);
+
         listProduk.get(nomor-1).set(0, namaProduk);
         listProduk.get(nomor-1).set(1, hargaProduk);
         listProduk.get(nomor-1).set(2, kategoriProduk);
+        listProduk.get(nomor-1).set(3, stokProduk);
 
         System.out.println("Berhasil mengupdate produk dengan data:");
         System.out.println("Nama: "+namaProduk);
         System.out.println("Harga: Rp."+hargaProduk);
         System.out.println("Kategori: "+kategoriProduk);
+        System.out.println("Stok: "+stokProduk);
     }
     static void deleteProduct (ArrayList<ArrayList<String>> listProduk) {
 //        System.out.println("==============================");
@@ -402,6 +429,7 @@ public class Main {
         System.out.println("Nama: "+listProduk.get(nomor-1).get(0));
         System.out.println("Harga: Rp."+listProduk.get(nomor-1).get(1));
         System.out.println("Kategori: "+listProduk.get(nomor-1).get(2));
+        System.out.println("Stok: "+listProduk.get(nomor-1).get(3));
 
         do {
             System.out.print("Apakah anda yakin ingin mendelete produk ini? [y/n]: ");
@@ -423,6 +451,7 @@ public class Main {
             System.out.println("Nama: "+listProduk.get(i).get(0));
             System.out.println("Harga: Rp."+listProduk.get(i).get(1));
             System.out.println("Kategori: "+listProduk.get(i).get(2));
+            System.out.println("Stok: "+listProduk.get(i).get(3));
         }
     }
 }
