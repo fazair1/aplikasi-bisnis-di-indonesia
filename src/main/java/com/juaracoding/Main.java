@@ -36,20 +36,20 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<ArrayList<String>> listProduk = new ArrayList<ArrayList<String>>();
-//        Random rand = new Random();
-//        String[] nama = {"Buku", "Pensil", "Pulpen", "Penghapus", "Rautan"};
-//        String[] harga = {"5000", "10000", "15000", "20000"};
-//        String[] stok = {"2", "5", "8", "12", "20"};
-//        for (int i = 0; i < 5; i++) {
-//            for (int j = 0; j < nama.length; j++) {
-//                listProduk.add(new ArrayList<String>());
-//                listProduk.get(listProduk.size()-1).add(0, nama[j]+" "+(i+1));
-//                int n = rand.nextInt(4);
-//                listProduk.get(listProduk.size()-1).add(1, harga[n]);
-//                listProduk.get(listProduk.size()-1).add(2, nama[j]);
-//                listProduk.get(listProduk.size()-1).add(3, stok[n]);
-//            }
-//        }
+        Random rand = new Random();
+        String[] nama = {"Buku", "Pensil", "Pulpen", "Penghapus", "Rautan"};
+        String[] harga = {"5000", "10000", "15000", "20000"};
+        String[] stok = {"2", "5", "8", "12", "20"};
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < nama.length; j++) {
+                listProduk.add(new ArrayList<String>());
+                listProduk.get(listProduk.size()-1).add(0, nama[j]+" "+(i+1));
+                int n = rand.nextInt(4);
+                listProduk.get(listProduk.size()-1).add(1, harga[n]);
+                listProduk.get(listProduk.size()-1).add(2, nama[j]);
+                listProduk.get(listProduk.size()-1).add(3, stok[n]);
+            }
+        }
         showMenu("0", listProduk);
     }
     static void showMenu (String num, ArrayList<ArrayList<String>> listProduk) {
